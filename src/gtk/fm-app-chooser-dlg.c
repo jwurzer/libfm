@@ -45,7 +45,7 @@
 #include "fm-app-menu-view.h"
 #include "fm-gtk-utils.h"
 #include <menu-cache.h>
-#include <gio/gdesktopappinfo.h>
+#include "gdesktopappinfo_wrapper.h"
 
 /* support for libmenu-cache 0.4.x */
 #ifndef MENU_CACHE_CHECK_VERSION

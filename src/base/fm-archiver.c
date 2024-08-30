@@ -39,7 +39,7 @@
 #include "fm-archiver.h"
 #include "fm-app-info.h"
 #include "fm-utils.h"
-#include <gio/gdesktopappinfo.h>
+#include "gdesktopappinfo_wrapper.h"
 #include <string.h>
 
 static GList* archivers = NULL;

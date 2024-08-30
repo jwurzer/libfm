@@ -38,7 +38,7 @@
 #include "fm-terminal.h"
 
 #include <string.h>
-#include <gio/gdesktopappinfo.h>
+#include "gdesktopappinfo_wrapper.h"
 
 static void append_file_to_cmd(GFile* gf, GString* cmd)
 {

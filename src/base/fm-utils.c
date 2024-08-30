@@ -37,7 +37,6 @@
 
 #include <glib/gi18n-lib.h>
 #include <libintl.h>
-#include <gio/gdesktopappinfo.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,6 +44,7 @@
 #include "fm-utils.h"
 #include "fm-file-info-job.h"
 #include "fm-config.h"
+#include "gdesktopappinfo_wrapper.h"
 
 #define BI_KiB  ((gdouble)1024.0)
 #define BI_MiB  ((gdouble)1024.0 * 1024.0)

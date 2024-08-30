@@ -36,7 +36,6 @@
 #endif
 
 #include <glib/gi18n-lib.h>
-#include <gio/gdesktopappinfo.h>
 #include <math.h>
 
 #include "fm-gtk-file-launcher.h"
@@ -45,6 +44,7 @@
 #include "fm-app-chooser-dlg.h"
 
 #include "fm.h"
+#include "gdesktopappinfo_wrapper.h"
 #include "gtk-compat.h"
 
 /* for open() */

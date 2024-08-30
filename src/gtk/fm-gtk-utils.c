@@ -36,7 +36,7 @@
 #include "gtk-compat.h"
 
 #include <glib/gi18n-lib.h>
-#include <gio/gdesktopappinfo.h>
+#include "gdesktopappinfo_wrapper.h"
 
 #include "fm-gtk-utils.h"
 #include "fm-file-ops-job.h"

@@ -43,7 +43,7 @@
 
 #include <glib/gi18n-lib.h>
 #include <libintl.h>
-#include <gio/gdesktopappinfo.h>
+#include "gdesktopappinfo_wrapper.h"
 
 #include <stdio.h>
 #include <stdlib.h>

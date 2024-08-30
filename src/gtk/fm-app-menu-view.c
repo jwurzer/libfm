@@ -39,7 +39,7 @@
 #include "fm-icon.h"
 #include <menu-cache.h>
 #include <glib/gi18n-lib.h>
-#include <gio/gdesktopappinfo.h>
+#include "gdesktopappinfo_wrapper.h"
 #include <string.h>
 
 /* support for libmenu-cache 0.4.x */
