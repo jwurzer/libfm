@@ -1,6 +1,10 @@
 #ifndef GDESKTOPAPPINFO_WRAPPER_H
 #define GDESKTOPAPPINFO_WRAPPER_H
 
+#if 0
+#include <gio/gdesktopappinfo.h>
+#else
+
 #include <gio/gosxappinfo.h>
 
 #define GDesktopAppInfo GOsxAppInfo
@@ -33,16 +37,20 @@
 
 static GOsxAppInfo *dummy_osx_app_info_new_from_keyfile(GKeyFile *key_file)
 {
+	g_warning("Using dummy_osx_app_info_new_from_keyfile(GKeyFile *key_file) for %p", key_file);
 	return NULL;
 }
 
 
+// called at: base/fm-file-launcher.c:76: app = (GAppInfo*)g_desktop_app_info_new_from_filename(file_or_id);
+// --> return type can be GAppInfo* instead of GOsxAppInfo*
 //GDesktopAppInfo *g_desktop_app_info_new_from_filename (const char *filename);
 //GOsxAppInfo *g_osx_app_info_new_from_filename (const char *filename); // doesn't exist
 #define g_desktop_app_info_new_from_filename(filename) dummy_osx_app_info_new_from_filename(filename)
 
 static GOsxAppInfo *dummy_osx_app_info_new_from_filename(const char *filename)
 {
+	g_warning("Using dummy_osx_app_info_new_from_filename(const char *filename) for %s", filename);
 	return NULL;
 }
 
@@ -52,8 +60,10 @@ static GOsxAppInfo *dummy_osx_app_info_new_from_filename(const char *filename)
 
 static GOsxAppInfo *dummy_osx_app_info_new(const char *desktop_id)
 {
+	g_warning("Using dummy_osx_app_info_new(const char *desktop_id) for %s", desktop_id);
 	return NULL;
 }
 
+#endif
 #endif
 
