@@ -336,7 +336,8 @@ on_drag_begin ( GtkWidget *src_widget,
         FmFileInfo *fi = fm_file_info_list_peek_head(ds->files);
         FmIcon *icon = fm_file_info_get_icon(fi);
         if (icon)
-#if GTK_CHECK_VERSION(3, 2, 0)
+#if GTK_CHECK_VERSION(3, 2, 0) && ( !defined(HAVE_CFLOCALECOPYCURRENT) || HAVE_CFLOCALECOPYCURRENT == 0 )
+            // --> gtk 3.2 or higher and NOT macos
             gtk_drag_set_icon_gicon(drag_context, fm_icon_get_gicon(icon), 0, 0);
 #else
         {
