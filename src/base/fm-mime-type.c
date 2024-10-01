@@ -488,10 +488,31 @@ const char* fm_mime_type_get_desc(FmMimeType* mime_type)
     /* FIXME: is locking needed here or not? */
     if (G_UNLIKELY(! mime_type->description))
     {
+#if 0
+        /* normal / original version */
         mime_type->description = g_content_type_get_description(mime_type->type);
         /* FIXME: should handle this better */
         if (G_UNLIKELY(! mime_type->description || ! *mime_type->description))
             mime_type->description = g_content_type_get_description(mime_type->type);
+#else
+        /* more detail version */
+        GString* detail = g_string_sized_new(128);
+        gchar* desc = NULL;
+        if (mime_type->type && *mime_type->type) {
+            desc = g_content_type_get_description(mime_type->type);
+            if (desc && *desc) {
+                g_string_append_printf(detail, "%s (%s)", desc, mime_type->type);
+            }
+            else {
+                g_string_append_printf(detail, "'no description for type' (%s)", mime_type->type);
+            }
+            g_free(desc);
+        }
+        else {
+            g_string_append_printf(detail, "'no type information available'");
+        }
+        mime_type->description = g_string_free(detail, FALSE);
+#endif
     }
     return mime_type->description;
 }
