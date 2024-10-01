@@ -278,6 +278,13 @@ AC_ARG_ENABLE(debug,
     [enable_debug="${enableval}"],
     [enable_debug=no]
 )
+
+AC_ARG_ENABLE(quartz,
+    [AC_HELP_STRING([--enable-quartz],
+        [build pcmanfm with quartz support @<:@default=no@:>@])],
+    [enable_quartz="${enableval}"],
+    [enable_quartz=no])
+
 if test "$enable_debug" = "yes"; then
     # turn on debug and disable optimization
     CPPFLAGS="$CPPFLAGS -DG_ENABLE_DEBUG -O0 -g"
@@ -294,6 +301,11 @@ else
     # turn off glib debug checks
     CPPFLAGS="$CPPFLAGS -DG_DISABLE_ASSERT -DG_DISABLE_CHECKS -DG_DISABLE_CAST_CHECKS"
 fi
+
+AS_IF([test "x$enable_quartz" != "xyes"], [
+    # quartz is NOT used --> x11 is used
+    AC_DEFINE(HAVE_X11, 1, [Support for X11])
+])
 
 dnl Check linker flags for modules
 AC_CHECK_LDFLAG(ac_cv_ld_z_defs, [-Wl,-z,defs], LDFLAGS)
