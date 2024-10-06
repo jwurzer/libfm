@@ -300,7 +300,7 @@ static gboolean on_drag_motion (GtkWidget *dest_widget,
         ret = (action != 0);
     }
     gdk_drag_status(drag_context, action, time);
-    g_print("on_drag_motion(), action: %d, ret: %d", (int)action, (int)ret);
+    g_print("on_drag_motion(), parent: %p, action: %d, ret: %d", &view->parent, (int)action, (int)ret);
 
     if(ret)
         gtk_tree_view_set_drag_dest_row(&view->parent, tp, pos);
@@ -316,7 +316,7 @@ static gboolean on_drag_motion (GtkWidget *dest_widget,
 static void on_drag_leave ( GtkWidget *dest_widget,
                     GdkDragContext *drag_context, guint time)
 {
-    g_warning("on_drag_leave()");
+    g_warning("on_drag_leave(), %p, %p", GTK_TREE_VIEW(dest_widget), dest_widget);
     gtk_tree_view_set_drag_dest_row(GTK_TREE_VIEW(dest_widget), NULL, 0);
     /* g_debug("drag_leave"); */
 }
@@ -324,14 +324,16 @@ static void on_drag_leave ( GtkWidget *dest_widget,
 static gboolean on_drag_drop ( GtkWidget *dest_widget,
                     GdkDragContext *drag_context, gint x, gint y, guint time)
 {
-    g_warning("on_drag_drop()");
+    g_warning("on_drag_drop(), drag context %p, pos %d, %d", drag_context, x, y);
     /* this is to reorder bookmark */
     if(gtk_drag_dest_find_target(dest_widget, drag_context, NULL)
        == tree_model_row_atom)
     {
+        g_print("find target, rv true");
         gtk_drag_get_data(dest_widget, drag_context, tree_model_row_atom, time);
         return TRUE;
     }
+    g_print("can't find target, rv false");
     return FALSE;
 }
 
@@ -465,6 +467,7 @@ static void fm_places_view_dispose(GObject *object)
 
     if(self->dnd_dest)
     {
+        g_warning("g_signal_handlers_disconnect_by_func(self->dnd_dest, on_dnd_dest_files_dropped, self); !!!!!!!!!!!!!!");
         g_signal_handlers_disconnect_by_func(self->dnd_dest, on_dnd_dest_files_dropped, self);
         g_object_unref(self->dnd_dest);
         self->dnd_dest = NULL;
@@ -542,6 +545,7 @@ static void fm_places_view_init(FmPlacesView *self)
     /* add our own targets */
     fm_dnd_dest_add_targets(GTK_WIDGET(self), dnd_targets, G_N_ELEMENTS(dnd_targets));
 
+    g_warning("g_signal_connect(self->dnd_dest, \"files-dropped\", G_CALLBACK(on_dnd_dest_files_dropped), self); !!!!!!!!!!!!!!!!");
     g_signal_connect(self->dnd_dest, "files-dropped", G_CALLBACK(on_dnd_dest_files_dropped), self);
     obj = gtk_widget_get_accessible(GTK_WIDGET(self));
     atk_object_set_description(obj, _("Shows list of common places, devices, and bookmarks in sidebar"));
