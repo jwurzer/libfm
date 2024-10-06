@@ -331,6 +331,8 @@ static int fm_dnd_dest_can_receive_drop(FmFileInfo* dest_fi, FmPath* dest,
 {
     /* g_debug("fm_dnd_dest_can_receive_drop: src %p(%s) dest %p(%s)", src,
             fm_path_get_basename(src), dest, fm_path_get_basename(dest)); */
+    g_warning("fm_dnd_dest_can_receive_drop: src %p(%s) dest %p(%s)", src,
+            fm_path_get_basename(src), dest, fm_path_get_basename(dest));
     if(!dest)
         return 0;
 
@@ -501,6 +503,7 @@ static gboolean fm_dnd_dest_files_dropped(FmDndDest* dd, int x, int y,
 
     dest = fm_dnd_dest_get_dest_path(dd);
     g_debug("%d files-dropped!, info_type: %d", fm_path_list_get_length(files), info_type);
+    g_warning("fm_dnd_dest_files_dropped(), %d files-dropped!, info_type: %d", fm_path_list_get_length(files), info_type);
 
     can_drop = fm_dnd_dest_can_receive_drop(dd->dest_file, dest,
                                             fm_path_list_peek_head(files));
@@ -750,6 +753,7 @@ gboolean _on_drag_data_received(FmDndDest* dd, GdkDragContext *drag_context,
 gboolean fm_dnd_dest_drag_data_received(FmDndDest* dd, GdkDragContext *drag_context,
              gint x, gint y, GtkSelectionData *sel_data, guint info, guint time)
 {
+    g_warning("fm_dnd_dest_drag_data_received()");
     return _on_drag_data_received(dd, drag_context, x, y, sel_data, info, time);
 }
 
@@ -757,6 +761,7 @@ static void on_drag_data_received(GtkWidget *w, GdkDragContext *drag_context,
                                   gint x, gint y, GtkSelectionData *data,
                                   guint info, guint time, FmDndDest* dd)
 {
+    g_warning("on_drag_data_received()");
     _on_drag_data_received(dd, drag_context, x, y, data, info, time);
 }
 
@@ -773,6 +778,7 @@ static void on_drag_data_received(GtkWidget *w, GdkDragContext *drag_context,
  */
 GdkAtom fm_dnd_dest_find_target(FmDndDest* dd, GdkDragContext *drag_context)
 {
+    g_warning("fm_dnd_dest_find_target()");
     guint i;
     for(i = 1; i < N_FM_DND_DEST_DEFAULT_TARGETS; i++)
     {
@@ -800,6 +806,7 @@ GdkAtom fm_dnd_dest_find_target(FmDndDest* dd, GdkDragContext *drag_context)
  */
 gboolean fm_dnd_dest_is_target_supported(FmDndDest* dd, GdkAtom target)
 {
+    g_warning("fm_dnd_dest_is_target_supported()");
     guint i;
 
     if(G_LIKELY(target != GDK_NONE))
@@ -908,6 +915,7 @@ gboolean _on_drag_drop(FmDndDest* dd, GdkDragContext *drag_context,
 gboolean fm_dnd_dest_drag_drop(FmDndDest* dd, GdkDragContext *drag_context,
                                GdkAtom target, int x, int y, guint time)
 {
+    g_warning("fm_dnd_dest_drag_drop()");
     return _on_drag_drop(dd, drag_context, target, x, y, time);
 }
 
@@ -934,6 +942,7 @@ GdkDragAction fm_dnd_dest_get_default_action(FmDndDest* dd,
                                              GdkDragContext* drag_context,
                                              GdkAtom target)
 {
+    g_warning("fm_dnd_dest_get_default_action(), FmDndDest %p, GdkDragContext %p", dd, drag_context);
     GdkDragAction action;
     FmFileInfo* dest = dd->dest_file;
     FmPath* dest_path;
@@ -946,6 +955,7 @@ GdkDragAction fm_dnd_dest_get_default_action(FmDndDest* dd,
     /* special support for dropping onto desktop entry */
     if(fm_file_info_is_desktop_entry(dest))
     {
+        g_print("is desktop entry");
         GdkModifierType mask = 0;
         gdk_window_get_device_position (gtk_widget_get_window(dd->widget),
                                         gdk_drag_context_get_device(drag_context),
@@ -968,6 +978,7 @@ GdkDragAction fm_dnd_dest_get_default_action(FmDndDest* dd,
         return GDK_ACTION_COPY;
     }
 
+    g_print("is no desktop entry");
     /* this is XDirectSave */
     if(target == dest_target_atom[FM_DND_DEST_TARGET_XDS])
         return GDK_ACTION_COPY;
@@ -1089,9 +1100,11 @@ query_sources:
  */
 void fm_dnd_dest_drag_leave(FmDndDest* dd, GdkDragContext* drag_context, guint time)
 {
+    g_warning("fm_dnd_dest_drag_leave() empty");
 }
 
 static void on_drag_leave(GtkWidget *widget, GdkDragContext *drag_context,
                           guint time, FmDndDest* dd)
 {
+    g_warning("on_drag_leave()");
 }
