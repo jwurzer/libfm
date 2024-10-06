@@ -1,0 +1,26 @@
+** (pcmanfm:2579): WARNING **: 11:21:25.821: on_drag_motion(), pos: 65, 268
+
+** (pcmanfm:2579): WARNING **: 11:21:25.821: drop between items, create bookmark items for dragged files
+
+** (pcmanfm:2579): WARNING **: 11:21:25.821: get_bookmark_drag_dest() fm-places-view.c
+
+** (pcmanfm:2579): WARNING **: 11:21:25.821: path: 10, pos: 1, ret: 1
+on_drag_motion(), action: 8, ret: 1
+** (pcmanfm:2579): WARNING **: 11:21:25.855: on_drag_motion(), pos: 64, 268
+
+** (pcmanfm:2579): WARNING **: 11:21:25.855: drop between items, create bookmark items for dragged files
+
+** (pcmanfm:2579): WARNING **: 11:21:25.855: get_bookmark_drag_dest() fm-places-view.c
+
+** (pcmanfm:2579): WARNING **: 11:21:25.855: path: 10, pos: 1, ret: 1
+on_drag_motion(), action: 8, ret: 1
+** (pcmanfm:2579): WARNING **: 11:21:30.176: on_drag_leave()
+
+** (pcmanfm:2579): WARNING **: 11:21:30.176: action= 8, 1 files-dropped!, dest=0x0 info_type: 1
+
+** (pcmanfm:2579): WARNING **: 11:21:30.176: add bookmark
+
+** (pcmanfm:2579): WARNING **: 11:21:30.176: get_bookmark_drag_dest() fm-places-view.c
+
+** (pcmanfm:2579): WARNING **: 11:21:30.176: path: 10, pos: 1, ret: 1
+
