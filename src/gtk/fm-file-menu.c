@@ -774,6 +774,7 @@ static void on_unhide(GtkAction* action, FmFileMenu* menu)
 
 static void on_add_bookmark(GtkAction* action, FmFileMenu* menu)
 {
+    g_warning("on_add_bookmark() fm-file-menu.c");
     FmFileInfo* fi = fm_file_info_list_peek_head(menu->file_infos);
     FmBookmarks* bookmarks;
     FmPath *path;

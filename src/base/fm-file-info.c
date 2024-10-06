@@ -1237,8 +1237,20 @@ gboolean fm_file_info_is_native(FmFileInfo* fi)
  */
 gboolean fm_file_info_is_dir(FmFileInfo* fi)
 {
+#if 1
+    //g_warning("fm_file_info_is_dir(FmFileInfo* fi) is called");
+    int rv = (S_ISDIR(fi->mode) ||
+            (fi->mime_type == _fm_mime_type_get_inode_directory()));
+    char* filename = fm_path_to_str(fi->path);
+    g_warning("fm_file_info_is_dir(FmFileInfo* fi) %s, rv: %d (%d, %d)", filename, rv,
+            (S_ISDIR(fi->mode) != 0),
+            (fi->mime_type == _fm_mime_type_get_inode_directory()));
+    g_free(filename);
+    return rv;
+#else
     return (S_ISDIR(fi->mode) ||
             (fi->mime_type == _fm_mime_type_get_inode_directory()));
+#endif
 }
 
 /**
