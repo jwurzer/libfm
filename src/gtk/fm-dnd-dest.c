@@ -788,7 +788,12 @@ GdkAtom fm_dnd_dest_find_target(FmDndDest* dd, GdkDragContext *drag_context)
            /* accept FM_DND_DEST_TARGET_FM_LIST only from the same application */
            && (i != FM_DND_DEST_TARGET_FM_LIST ||
                gtk_drag_get_source_widget(drag_context)))
+        {
+            gchar* atom_name = gdk_atom_name(target);
+            g_print("find target: %s", atom_name);
+            g_free(atom_name);
             return target;
+        }
     }
     g_print("find target: GDK_NONE");
     return GDK_NONE;
@@ -813,7 +818,12 @@ gboolean fm_dnd_dest_is_target_supported(FmDndDest* dd, GdkAtom target)
     if(G_LIKELY(target != GDK_NONE))
         for(i = 1; i < N_FM_DND_DEST_DEFAULT_TARGETS; i++)
             if(dest_target_atom[i] == target)
+            {
+                gchar* atom_name = gdk_atom_name(target);
+                g_print("is target supported return TRUE for %s", atom_name);
+                g_free(atom_name);
                 return TRUE;
+            }
     g_print("is target supported return FALSE");
     return FALSE;
 }
