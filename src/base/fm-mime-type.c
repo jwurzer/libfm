@@ -512,7 +512,13 @@ const char* fm_mime_type_get_desc(FmMimeType* mime_type)
             g_string_append_printf(detail, "'no type information available'");
         }
         mime_type->description = g_string_free(detail, FALSE);
+#if 1 // only for debugging
+        g_print("fm_mime_type_get_desc(): SET DESC!: '%s' for mime type '%s'\n", mime_type->description, mime_type->type ?  mime_type->type : "(null)");
+#endif
 #endif
     }
+#if 1 // only for debugging
+    g_print("fm_mime_type_get_desc(): '%s' for mime type '%s'\n", mime_type->description, mime_type->type ?  mime_type->type : "(null)");
+#endif
     return mime_type->description;
 }
