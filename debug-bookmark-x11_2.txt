@@ -1,0 +1,38 @@
+** (pcmanfm:3782): WARNING **: 16:29:29.635: on_drag_motion(), pos: 79, 282
+
+** (pcmanfm:3782): WARNING **: 16:29:29.635: fm_dnd_dest_is_target_supported()
+
+** (pcmanfm:3782): WARNING **: 16:29:29.635: drop between items, create bookmark items for dragged files
+
+** (pcmanfm:3782): WARNING **: 16:29:29.635: fm_dnd_dest_get_default_action(), FmDndDest 0x6000034e7c00, GdkDragContext 0x6000029cd210
+
+** (pcmanfm:3782): WARNING **: 16:29:29.635: get_bookmark_drag_dest() fm-places-view.c
+
+** (pcmanfm:3782): WARNING **: 16:29:29.635: path: 12, pos: 1, ret: 1
+on_drag_motion(), parent: 0x14f630290, action: 8, ret: 1
+** (pcmanfm:3782): WARNING **: 16:29:29.651: on_drag_motion(), pos: 79, 282
+
+** (pcmanfm:3782): WARNING **: 16:29:29.651: fm_dnd_dest_is_target_supported()
+
+** (pcmanfm:3782): WARNING **: 16:29:29.651: drop between items, create bookmark items for dragged files
+
+** (pcmanfm:3782): WARNING **: 16:29:29.651: fm_dnd_dest_get_default_action(), FmDndDest 0x6000034e7c00, GdkDragContext 0x6000029cd210
+
+** (pcmanfm:3782): WARNING **: 16:29:29.651: get_bookmark_drag_dest() fm-places-view.c
+
+** (pcmanfm:3782): WARNING **: 16:29:29.651: path: 12, pos: 1, ret: 1
+on_drag_motion(), parent: 0x14f630290, action: 8, ret: 1
+** (pcmanfm:3782): WARNING **: 16:29:30.339: on_drag_leave()
+
+** (pcmanfm:3782): WARNING **: 16:29:30.339: on_drag_leave(), 0x14f630290, 0x14f630290
+
+** (pcmanfm:3782): WARNING **: 16:29:30.339: fm_dnd_dest_find_target(), FmDndDest 0x6000034e7c00, GdkDragContext 0x6000029cd210
+
+** (pcmanfm:3782): WARNING **: 16:29:30.339: action= 8, 1 files-dropped!, dest=0x0 info_type: 1
+
+** (pcmanfm:3782): WARNING **: 16:29:30.339: add bookmark
+
+** (pcmanfm:3782): WARNING **: 16:29:30.339: get_bookmark_drag_dest() fm-places-view.c
+
+** (pcmanfm:3782): WARNING **: 16:29:30.339: path: 12, pos: 1, ret: 1
+

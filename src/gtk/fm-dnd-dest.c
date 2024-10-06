@@ -778,7 +778,7 @@ static void on_drag_data_received(GtkWidget *w, GdkDragContext *drag_context,
  */
 GdkAtom fm_dnd_dest_find_target(FmDndDest* dd, GdkDragContext *drag_context)
 {
-    g_warning("fm_dnd_dest_find_target()");
+    g_warning("fm_dnd_dest_find_target(), FmDndDest %p, GdkDragContext %p", dd, drag_context);
     guint i;
     for(i = 1; i < N_FM_DND_DEST_DEFAULT_TARGETS; i++)
     {
@@ -790,6 +790,7 @@ GdkAtom fm_dnd_dest_find_target(FmDndDest* dd, GdkDragContext *drag_context)
                gtk_drag_get_source_widget(drag_context)))
             return target;
     }
+    g_print("find target: GDK_NONE");
     return GDK_NONE;
 }
 
@@ -813,6 +814,7 @@ gboolean fm_dnd_dest_is_target_supported(FmDndDest* dd, GdkAtom target)
         for(i = 1; i < N_FM_DND_DEST_DEFAULT_TARGETS; i++)
             if(dest_target_atom[i] == target)
                 return TRUE;
+    g_print("is target supported return FALSE");
     return FALSE;
 }
 
