@@ -125,9 +125,10 @@ void fm_dnd_dest_drag_leave(FmDndDest* dd, GdkDragContext* drag_context, guint t
  *
  * Since: 1.0.1
  */
-#define fm_dnd_dest_add_targets(widget,targets,n) \
-            gtk_target_list_add_table(gtk_drag_dest_get_target_list(widget), \
-                                      targets, n)
+//#define fm_dnd_dest_add_targets(widget,targets,n) \
+//            gtk_target_list_add_table(gtk_drag_dest_get_target_list(widget), \
+//                                      targets, n)
+void fm_dnd_dest_add_targets(GtkWidget* widget, const GtkTargetEntry* targets, guint ntargets);
 
 G_END_DECLS
 

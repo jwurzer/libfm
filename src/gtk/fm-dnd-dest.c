@@ -757,6 +757,9 @@ gboolean fm_drag_context_has_target(GdkDragContext *drag_context, GdkAtom target
     gchar *atom_search_name = gdk_atom_name(target);
     g_warning("fm_drag_context_has_target() search %s:", atom_search_name);
     g_free(atom_search_name);
+    if (!GDK_IS_DRAG_CONTEXT(drag_context)) {
+        g_print(" NO DRAG!");
+    }
     // list of GdkAtom targets
     GList *list = gdk_drag_context_list_targets(drag_context);
     GList *elem;
@@ -833,7 +836,8 @@ GdkAtom fm_dnd_dest_find_target(FmDndDest* dd, GdkDragContext *drag_context)
             gchar* atom_name = gdk_atom_name(target);
             g_print(" %s,%d,%d,%d", atom_name, has_target, i_not_FM_LIST, get_source);
             g_free(atom_name);
-            if (has_target && (i_not_FM_LIST || get_source)) {
+            //if (has_target && (i_not_FM_LIST || get_source)) {
+            if (i_not_FM_LIST || get_source) { // this is a hack. it ignores the result of fm_drag_context_has_target(drag_context, target);
                 g_print(" find it!\n");
                 return target;
             }
@@ -1188,3 +1192,15 @@ static void on_drag_leave(GtkWidget *widget, GdkDragContext *drag_context,
 {
     g_warning("on_drag_leave()");
 }
+
+void fm_dnd_dest_add_targets(GtkWidget* widget, const GtkTargetEntry* targets, guint ntargets)
+{
+    g_warning("fm_dnd_dest_add_targets(GtkWidget* widget, const GtkTargetEntry* targets, guint ntargets(%u))", ntargets);
+    guint i;
+    for (i = 0; i < ntargets; ++i) {
+        const GtkTargetEntry* target = &targets[i];
+        g_print("%u: GtkTargetEntry: %s, flags %u, info %u\n", i, target->target, target->flags, target->info);
+    }
+    gtk_target_list_add_table(gtk_drag_dest_get_target_list(widget), targets, ntargets);
+}
+
