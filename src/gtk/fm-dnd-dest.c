@@ -761,6 +761,7 @@ gboolean fm_drag_context_has_target(GdkDragContext *drag_context, GdkAtom target
     GList *list = gdk_drag_context_list_targets(drag_context);
     GList *elem;
     int count = 0;
+    gboolean rv = FALSE;
     for (elem = list; elem; elem = elem->next, ++count)
     {
         GdkAtom elem_target = elem->data;
@@ -769,12 +770,13 @@ gboolean fm_drag_context_has_target(GdkDragContext *drag_context, GdkAtom target
         g_free(atom_name);
         if (elem_target == target)
         {
-            g_print(": idx %d TRUE", count);
-            return TRUE;
+            //g_print(": idx %d TRUE", count);
+            //return TRUE;
+            rv = TRUE;
         }
     }
-    g_print(": cnt %d, FALSE", count);
-    return FALSE;
+    g_print(": cnt %d, %s", count, rv ? "TRUE" : "FALSE");
+    return rv;
 }
 
 gboolean fm_dnd_dest_drag_data_received(FmDndDest* dd, GdkDragContext *drag_context,
