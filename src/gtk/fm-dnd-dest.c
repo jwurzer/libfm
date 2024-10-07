@@ -750,6 +750,33 @@ gboolean _on_drag_data_received(FmDndDest* dd, GdkDragContext *drag_context,
     return (files != NULL);
 }
 
+//#define fm_drag_context_has_target(ctx, target) \
+//    (g_list_find(gdk_drag_context_list_targets(ctx), target) != NULL)
+gboolean fm_drag_context_has_target(GdkDragContext *drag_context, GdkAtom target)
+{
+    gchar *atom_search_name = gdk_atom_name(target);
+    g_warning("fm_drag_context_has_target() search %s:", atom_search_name);
+    g_free(atom_search_name);
+    // list of GdkAtom targets
+    GList *list = gdk_drag_context_list_targets(drag_context);
+    GList *elem;
+    int count = 0;
+    for (elem = list; elem; elem = elem->next, ++count)
+    {
+        GdkAtom elem_target = elem->data;
+        gchar *atom_name = gdk_atom_name(elem_target);
+        g_print(" %s", atom_name);
+        g_free(atom_name);
+        if (elem_target == target)
+        {
+            g_print(": idx %d TRUE", count);
+            return TRUE;
+        }
+    }
+    g_print(": cnt %d, FALSE", count);
+    return FALSE;
+}
+
 gboolean fm_dnd_dest_drag_data_received(FmDndDest* dd, GdkDragContext *drag_context,
              gint x, gint y, GtkSelectionData *sel_data, guint info, guint time)
 {
@@ -778,11 +805,12 @@ static void on_drag_data_received(GtkWidget *w, GdkDragContext *drag_context,
  */
 GdkAtom fm_dnd_dest_find_target(FmDndDest* dd, GdkDragContext *drag_context)
 {
-    g_warning("fm_dnd_dest_find_target(), FmDndDest %p, GdkDragContext %p", dd, drag_context);
+    g_warning("fm_dnd_dest_find_target(FmDndDest* %p, GdkDragContext* %p)", dd, drag_context);
     guint i;
     for(i = 1; i < N_FM_DND_DEST_DEFAULT_TARGETS; i++)
     {
         GdkAtom target = dest_target_atom[i];
+#if 0
         if(G_LIKELY(target != GDK_NONE)
            && fm_drag_context_has_target(drag_context, target)
            /* accept FM_DND_DEST_TARGET_FM_LIST only from the same application */
@@ -794,8 +822,34 @@ GdkAtom fm_dnd_dest_find_target(FmDndDest* dd, GdkDragContext *drag_context)
             g_free(atom_name);
             return target;
         }
+#else
+        if(G_LIKELY(target != GDK_NONE))
+        {
+            int has_target = fm_drag_context_has_target(drag_context, target);
+            int i_not_FM_LIST = (i != FM_DND_DEST_TARGET_FM_LIST);
+            int get_source = !!gtk_drag_get_source_widget(drag_context);
+            gchar* atom_name = gdk_atom_name(target);
+            g_print(" %s,%d,%d,%d", atom_name, has_target, i_not_FM_LIST, get_source);
+            g_free(atom_name);
+            if (has_target && (i_not_FM_LIST || get_source)) {
+                g_print(" find it!\n");
+                return target;
+            }
+        }
+#endif
     }
-    g_print("find target: GDK_NONE");
+    g_print("find target: GDK_NONE, targets: ");
+    for(i = 1; i < N_FM_DND_DEST_DEFAULT_TARGETS; i++)
+    {
+        GdkAtom target = dest_target_atom[i];
+        if(G_LIKELY(target != GDK_NONE))
+        {
+            gchar* atom_name = gdk_atom_name(target);
+            g_print(" %s", atom_name);
+            g_free(atom_name);
+        }
+    }
+    g_print("\n");
     return GDK_NONE;
 }
 
@@ -812,11 +866,13 @@ GdkAtom fm_dnd_dest_find_target(FmDndDest* dd, GdkDragContext *drag_context)
  */
 gboolean fm_dnd_dest_is_target_supported(FmDndDest* dd, GdkAtom target)
 {
-    g_warning("fm_dnd_dest_is_target_supported()");
+    g_warning("fm_dnd_dest_is_target_supported(FmDndDest* dd, GdkAtom target)");
     guint i;
 
     if(G_LIKELY(target != GDK_NONE))
+    {
         for(i = 1; i < N_FM_DND_DEST_DEFAULT_TARGETS; i++)
+        {
             if(dest_target_atom[i] == target)
             {
                 gchar* atom_name = gdk_atom_name(target);
@@ -824,7 +880,17 @@ gboolean fm_dnd_dest_is_target_supported(FmDndDest* dd, GdkAtom target)
                 g_free(atom_name);
                 return TRUE;
             }
-    g_print("is target supported return FALSE");
+        }
+    }
+    g_print("is target supported return FALSE, targets: ");
+    for(i = 1; i < N_FM_DND_DEST_DEFAULT_TARGETS; i++)
+    {
+        GdkAtom target = dest_target_atom[i];
+        gchar* atom_name = gdk_atom_name(target);
+        g_print(" %s", atom_name);
+        g_free(atom_name);
+    }
+    g_print("\n");
     return FALSE;
 }
 

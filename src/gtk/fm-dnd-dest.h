@@ -92,8 +92,9 @@ FmPath* fm_dnd_dest_get_dest_path(FmDndDest* dd);
 #  define gdk_drag_context_list_targets(ctx) ctx->targets
 #endif
 
-#define fm_drag_context_has_target(ctx, target) \
-    (g_list_find(gdk_drag_context_list_targets(ctx), target) != NULL)
+//#define fm_drag_context_has_target(ctx, target) \
+//    (g_list_find(gdk_drag_context_list_targets(ctx), target) != NULL)
+gboolean fm_drag_context_has_target(GdkDragContext *drag_context, GdkAtom target);
 
 #define fm_drag_context_has_target_name(ctx, name)  \
     fm_drag_context_has_target(ctx, gdk_atom_intern_static_string(name))
