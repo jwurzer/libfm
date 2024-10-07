@@ -433,12 +433,16 @@ static gboolean on_dnd_dest_files_dropped(FmDndDest* dd, int x, int y,
             {
                 FmPath* path = FM_PATH(l->data);
                 GFile* gf = fm_path_to_gfile(path);
-                if(g_file_query_file_type(gf, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS,
-                                          NULL) == G_FILE_TYPE_DIRECTORY)
+                GFileType file_type = g_file_query_file_type(gf, G_FILE_QUERY_INFO_NOFOLLOW_SYMLINKS, NULL);
+                if(file_type == G_FILE_TYPE_DIRECTORY || file_type == G_FILE_TYPE_SYMBOLIC_LINK)
                 {
                     char* disp_name = fm_path_display_basename(path);
+                    g_print("insert bookmark with fm_bookmarks_insert()\n");
                     fm_bookmarks_insert(fm_places_model_get_bookmarks(model), path, disp_name, idx);
                     g_free(disp_name);
+                }
+                else {
+                    g_print("insert bookmark failed. %d != G_FILE_TYPE_DIRECTORY and != G_FILE_TYPE_SYMBOLIC_LINK\n", (int)file_type);
                 }
                 g_object_unref(gf);
                 /* we don't need to add item to places view. Later the bookmarks will be reloaded. */
